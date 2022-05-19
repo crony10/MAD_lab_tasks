@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
                 else{
                     Toast.makeText(MainActivity.this, "invalid", Toast.LENGTH_SHORT).show();
                 }
+                //adding a temp check
             }
         });
     }
