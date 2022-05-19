@@ -1,5 +1,6 @@
 package com.example.practical1;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.nfc.Tag;
 import android.support.v7.app.AppCompatActivity;
@@ -11,38 +12,32 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
-
-    public static String TAG = "mainActivity";
-    Button mySignInbtn;
-    TextView emailText;
-    EditText passwordText;
+public class MainActivity extends Activity implements View.OnClickListener {
+    Button buttonStart, buttonStop,buttonNext;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        mybtn = new Button(this);
-        mySignInbtn = findViewById(R.id.button);
-        emailText = (EditText)findViewById(R.id.editTextTextEmailAddress);
-        passwordText = findViewById(R.id.editTextTextPassword);
+        buttonStart = findViewById(R.id.buttonStart);
+        buttonStop = findViewById(R.id.buttonStop);
+        buttonNext =  findViewById(R.id.buttonNext);
 
-        mySignInbtn.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View view)
-            {
-                Log.v(TAG,"Button clicked");
-                String email = emailText.getText().toString();
-                String password = passwordText.getText().toString();
-                if(email.equals("user@gmail.com") && password.equals("user")){
-                    Log.v(TAG,"validated");
-                    Intent intent = new Intent(MainActivity.this,HomeActivity.class);
-                    startActivity(intent);
-                }
-                else{
-                    Toast.makeText(MainActivity.this, "invalid", Toast.LENGTH_SHORT).show();
-                }
-                //adding a temp check
-            }
-        });
+        buttonStart.setOnClickListener(this);
+        buttonStop.setOnClickListener(this);
+        buttonNext.setOnClickListener(this);
     }
+    public void onClick(View view) {
+        if (view == buttonStart) {
+            //starting service
+            startService(new Intent(this, MyService.class));
+        }if (view == buttonStop) {
+            //stopping service
+            stopService(new Intent(this, MyService.class));
+        }else if (view==buttonNext){
+            Intent intent=new Intent(this,AnotherActivity.class);
+            startActivity(intent);
+        }
+    }
+
 }
